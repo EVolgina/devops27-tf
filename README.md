@@ -1,8 +1,16 @@
 # Чеклист готовности к домашнему заданию
 - Скачайте и установите актуальную версию terraform >=1.4.X . Приложите скриншот вывода команды terraform --version.
-  ![v](https://github.com/EVolgina/devops27-tf/blob/main/tfv.PNG)
+```
+  terraform --version
+Terraform v1.4.6
+on linux_amd64
++ provider registry.terraform.io/hashicorp/random v3.5.1
++ provider registry.terraform.io/kreuzwerker/docker v3.0.2
+Your version of Terraform is out of date! The latest version
+is 1.5.2. You can update by downloading from https://www.terraform.io/downloads.html
+```
 - Скачайте на свой ПК данный git репозиторий. Исходный код для выполнения задания расположен в директории 01/src.
-  ![clon](https://github.com/EVolgina/devops27-tf/blob/main/clon.PNG)
+ git clone https://github.com/netology-code/ter-homeworks.git 
 - Убедитесь, что в вашей ОС установлен docker.
 ```
   docker --version
@@ -112,6 +120,47 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 7e1004caf435   021283c8eb95   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:8000->80/tcp   example_DYBXpA4vuU1tVisZ
 
 ```
-Замените имя docker-контейнера в блоке кода на hello_world, выполните команду terraform apply -auto-approve. Объясните своими словами, в чем может быть опасность применения ключа -auto-approve ? В качестве ответа дополнительно приложите вывод команды docker ps
-Уничтожьте созданные ресурсы с помощью terraform. Убедитесь, что все ресурсы удалены. Приложите содержимое файла terraform.tfstate.
-Объясните, почему при этом не был удален docker образ nginx:latest ? Ответ подкрепите выдержкой из документации провайдера.
+- Замените имя docker-контейнера в блоке кода на hello_world, выполните команду terraform apply -auto-approve. Объясните своими словами, в чем может быть опасность применения ключа -auto-approve ? В качестве ответа дополнительно приложите вывод команды docker ps
+Ответ: флаг -auto-approve указывает Terraform автоматически утверждать и применять любые изменения, не требуя подтверждения вручную. Функция автоматического утверждения исключает возможность проверки и валидации вручную. Это означает, что любые неправильно сконфигурированные или небезопасные изменения могут быть автоматически применены без проверки, потенциально ставя под угрозу безопасность инфраструктуры
+```
+docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+- Уничтожьте созданные ресурсы с помощью terraform. Убедитесь, что все ресурсы удалены. Приложите содержимое файла terraform.tfstate.
+```
+terraform destroy
+random_password.random_string: Refreshing state... [id=none]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  - destroy
+Terraform will perform the following actions:
+  # random_password.random_string will be destroyed
+  - resource "random_password" "random_string" {
+      - bcrypt_hash = (sensitive value) -> null
+      - id          = "none" -> null
+      - length      = 16 -> null
+      - lower       = true -> null
+      - min_lower   = 1 -> null
+      - min_numeric = 1 -> null
+      - min_special = 0 -> null
+      - min_upper   = 1 -> null
+      - number      = true -> null
+      - numeric     = true -> null
+      - result      = (sensitive value) -> null
+      - special     = false -> null
+      - upper       = true -> null
+    }
+Plan: 0 to add, 0 to change, 1 to destroy.
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+  Enter a value: yes
+random_password.random_string: Destroying... [id=none]
+random_password.random_string: Destruction complete after 0s
+Destroy complete! Resources: 1 destroyed.
+```
+![st]()
+- Объясните, почему при этом не был удален docker образ nginx:latest ? Ответ подкрепите выдержкой из документации провайдера.
+- Ответ: "Поставщик Docker ориентирован на создание, управление и уничтожение ресурсов, определенных в Terraform. Он не управляет изображениями Docker или контейнерами, которые не были созданы Terraform. Когда вы запускаете terraform destroy, он уничтожает ресурсы, созданные Terraform, но не удаляет автоматически образы Docker или контейнеры, которые были созданы извне. Важно отметить, что Terraform в первую очередь ориентирована на управление инфраструктурой и ресурсами, определенными в ее конфигурационных файлах. Он может предоставлять, изменять и уничтожать ресурсы в пределах своей компетенции, но он не охватывает полное управление жизненным циклом внешних ресурсов, таких как образы Docker или контейнеры."
+Образ nginx:latest Docker не будет автоматически удален командой terraform destroy.
