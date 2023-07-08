@@ -19,7 +19,7 @@ is 1.5.2. You can update by downloading from https://www.terraform.io/downloads.
 # Задание 1
 - Перейдите в каталог src. Скачайте все необходимые зависимости, использованные в проекте.
 - Изучите файл .gitignore. В каком terraform файле согласно этому .gitignore допустимо сохранить личную, секретную информацию?
-ответ: personal.auto.tfvars
+### ответ: personal.auto.tfvars
 - Выполните код проекта. Найдите в State-файле секретное содержимое созданного ресурса random_password, пришлите в качестве ответа конкретный ключ и его значение.
 
 ```
@@ -61,11 +61,9 @@ Success! The configuration is valid.
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
 following symbols:
   + create
-
 Terraform will perform the following actions:
-
   # random_password.random_string will be created
-  + resource "random_password" "random_string" {
+  + resource "random_password" "random_string" {  ----- В State-файле такая же строка
       + bcrypt_hash = (sensitive value)
       + id          = (known after apply)
       + length      = 16
@@ -87,7 +85,7 @@ you run "terraform apply" now.
 ```
 
 - Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла main.tf. Выполните команду terraform validate. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.
-ответ:
+### ответ:
 ![cor](https://github.com/EVolgina/devops27-tf/blob/main/corect.PNG)
 ```
 ~/ter-homeworks/01/src$ terraform validate
@@ -96,13 +94,10 @@ Success! The configuration is valid.
 - Выполните код. В качестве ответа приложите вывод команды docker ps
 ```
 Plan: 3 to add, 0 to change, 0 to destroy.
-
 Do you want to perform these actions?
   Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
-
   Enter a value: yes
-
 docker_image.nginx_image: Creating...
 random_password.random_string: Creating...
 random_password.random_string: Creation complete after 1s [id=none]
@@ -121,7 +116,7 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 
 ```
 - Замените имя docker-контейнера в блоке кода на hello_world, выполните команду terraform apply -auto-approve. Объясните своими словами, в чем может быть опасность применения ключа -auto-approve ? В качестве ответа дополнительно приложите вывод команды docker ps
-Ответ: флаг -auto-approve указывает Terraform автоматически утверждать и применять любые изменения, не требуя подтверждения вручную. Функция автоматического утверждения исключает возможность проверки и валидации вручную. Это означает, что любые неправильно сконфигурированные или небезопасные изменения могут быть автоматически применены без проверки, потенциально ставя под угрозу безопасность инфраструктуры
+### Ответ: флаг -auto-approve указывает Terraform автоматически утверждать и применять любые изменения, не требуя подтверждения вручную. Функция автоматического утверждения исключает возможность проверки и валидации вручную. Это означает, что любые неправильно сконфигурированные или небезопасные изменения могут быть автоматически применены без проверки, потенциально ставя под угрозу безопасность инфраструктуры
 ```
 docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
@@ -160,7 +155,7 @@ random_password.random_string: Destroying... [id=none]
 random_password.random_string: Destruction complete after 0s
 Destroy complete! Resources: 1 destroyed.
 ```
-![st]()
+![st](https://github.com/EVolgina/devops27-tf/blob/main/state.PNG)
 - Объясните, почему при этом не был удален docker образ nginx:latest ? Ответ подкрепите выдержкой из документации провайдера.
-- Ответ: "Поставщик Docker ориентирован на создание, управление и уничтожение ресурсов, определенных в Terraform. Он не управляет изображениями Docker или контейнерами, которые не были созданы Terraform. Когда вы запускаете terraform destroy, он уничтожает ресурсы, созданные Terraform, но не удаляет автоматически образы Docker или контейнеры, которые были созданы извне. Важно отметить, что Terraform в первую очередь ориентирована на управление инфраструктурой и ресурсами, определенными в ее конфигурационных файлах. Он может предоставлять, изменять и уничтожать ресурсы в пределах своей компетенции, но он не охватывает полное управление жизненным циклом внешних ресурсов, таких как образы Docker или контейнеры."
+### Ответ: "Поставщик Docker ориентирован на создание, управление и уничтожение ресурсов, определенных в Terraform. Он не управляет изображениями Docker или контейнерами, которые не были созданы Terraform. Когда вы запускаете terraform destroy, он уничтожает ресурсы, созданные Terraform, но не удаляет автоматически образы Docker или контейнеры, которые были созданы извне. Важно отметить, что Terraform в первую очередь ориентирована на управление инфраструктурой и ресурсами, определенными в ее конфигурационных файлах. Он может предоставлять, изменять и уничтожать ресурсы в пределах своей компетенции, но он не охватывает полное управление жизненным циклом внешних ресурсов, таких как образы Docker или контейнеры."
 Образ nginx:latest Docker не будет автоматически удален командой terraform destroy.
