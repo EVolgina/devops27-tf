@@ -82,7 +82,7 @@ you run "terraform apply" now.
 
 - Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла main.tf. Выполните команду terraform validate. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.
 ответ:
-![cor]()
+![cor](https://github.com/EVolgina/devops27-tf/blob/main/corect.PNG)
 ```
 devops@WORKBOOK:~/ter-homeworks/01/src$ terraform validate
 Success! The configuration is valid.
