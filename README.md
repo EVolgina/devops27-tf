@@ -83,7 +83,8 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if
 you run "terraform apply" now.
 ```
-![res]()
+![res](https://github.com/EVolgina/devops27-tf/blob/main/result.PNG)
+
 - Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла main.tf. Выполните команду terraform validate. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.
 ### ответ:
 ![cor](https://github.com/EVolgina/devops27-tf/blob/main/corect.PNG)
