@@ -162,4 +162,5 @@ Destroy complete! Resources: 1 destroyed.
 Если true, то образ Docker не будет удален при операции уничтожения.
 Если это ложь, он удалит изображение из локального хранилища докера при операции уничтожения.
 Образ nginx:latest Docker не будет автоматически удален командой terraform destroy.
+
 ![keep](https://github.com/EVolgina/devops27-tf/blob/main/keep.PNG)
