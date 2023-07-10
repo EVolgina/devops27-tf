@@ -63,7 +63,7 @@ following symbols:
   + create
 Terraform will perform the following actions:
   # random_password.random_string will be created
-  + resource "random_password" "random_string" {  ----- В State-файле такая же строка
+  + resource "random_password" "random_string" { 
       + bcrypt_hash = (sensitive value)
       + id          = (known after apply)
       + length      = 16
@@ -83,7 +83,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if
 you run "terraform apply" now.
 ```
-
+![res]()
 - Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла main.tf. Выполните команду terraform validate. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.
 ### ответ:
 ![cor](https://github.com/EVolgina/devops27-tf/blob/main/corect.PNG)
@@ -157,5 +157,7 @@ Destroy complete! Resources: 1 destroyed.
 ```
 ![st](https://github.com/EVolgina/devops27-tf/blob/main/state.PNG)
 - Объясните, почему при этом не был удален docker образ nginx:latest ? Ответ подкрепите выдержкой из документации провайдера.
-### Ответ: "Поставщик Docker ориентирован на создание, управление и уничтожение ресурсов, определенных в Terraform. Он не управляет изображениями Docker или контейнерами, которые не были созданы Terraform. Когда вы запускаете terraform destroy, он уничтожает ресурсы, созданные Terraform, но не удаляет автоматически образы Docker или контейнеры, которые были созданы извне. Важно отметить, что Terraform в первую очередь ориентирована на управление инфраструктурой и ресурсами, определенными в ее конфигурационных файлах. Он может предоставлять, изменять и уничтожать ресурсы в пределах своей компетенции, но он не охватывает полное управление жизненным циклом внешних ресурсов, таких как образы Docker или контейнеры."
+### Ответ: Keep_locally - (Необязательно, логическое значение) 
+Если true, то образ Docker не будет удален при операции уничтожения.
+Если это ложь, он удалит изображение из локального хранилища докера при операции уничтожения.
 Образ nginx:latest Docker не будет автоматически удален командой terraform destroy.
