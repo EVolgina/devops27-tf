@@ -160,7 +160,8 @@ Destroy complete! Resources: 1 destroyed.
 - Объясните, почему при этом не был удален docker образ nginx:latest ? Ответ подкрепите выдержкой из документации провайдера.
 ### Ответ: Keep_locally - (Необязательно, логическое значение) 
 Если true, то образ Docker не будет удален при операции уничтожения.
-Если это ложь, он удалит изображение из локального хранилища докера при операции уничтожения.
+resource "docker_image" "nginx" block: This block defines a Docker image resource named "nginx". It specifies the name of the image as "nginx:latest" and sets the keep_locally attribute to false, indicating that the image should not be kept locally after use.
+Если это ложь, он удалит образ из локального хранилища докера при операции уничтожения.
 Образ nginx:latest Docker не будет автоматически удален командой terraform destroy.
 
 ![keep](https://github.com/EVolgina/devops27-tf/blob/main/keep.PNG)
