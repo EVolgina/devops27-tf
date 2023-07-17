@@ -13,8 +13,8 @@ is 1.5.2. You can update by downloading from https://www.terraform.io/downloads.
  git clone https://github.com/netology-code/ter-homeworks.git 
 - Убедитесь, что в вашей ОС установлен docker.
 ```
-
-
+  docker --version
+  Docker version 24.0.4, build 3713ee1
 ```
 # Задание 1
 - Перейдите в каталог src. Скачайте все необходимые зависимости, использованные в проекте.
